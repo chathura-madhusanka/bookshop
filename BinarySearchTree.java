@@ -66,5 +66,23 @@ public class BinarySearchTree
 	}
 	
 	
-	
+	/* This method will find the node with minimum value and return it to the caller.
+	When it was found node will delete with set it into remove method with recursivly checking.
+	This method accept one parameter with node object. */
+	protected Node getMinimum(Node node) 
+	{		
+			if(node.left == null)		// If pointed node has not left child,
+			{
+				Node b = new Node(node.book);	// Temporarly store node in new object of node with reference 'b'	
+				remove(node.book.title);		// call remove method with book title to find and delete it
+				return b;						// Return stored data of b
+			}
+			else if (node.left.left == null)  	// If pointed node has left child and the child has no left child,
+			{
+				Node b = node.left;				// New referencr 'b' refer to left child of 'node'
+				remove(b.book.title);			// call remove method with book title to find and delete it	
+				return b;						// Return stored data of b
+			}				
+		return getMinimum(node.left);	// Recursively find the node minimum value
+    }
 }
