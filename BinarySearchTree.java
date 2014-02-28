@@ -12,13 +12,20 @@ Methods:
 	public Node search(int ISBN)
 	public boolean remove(String title)
 	public boolean remove(int ISBN)
+	public List getBookList(String title)
+	public List getBookList(Node node,String title)
+	
+Other Methods:
+	public void readNodes(Node node,String booktitle)
+	public Node getMinimum(Node node)
 	
 */
+import java.util.*;
 
 public class BinarySearchTree
 {
 	Node root;	// This node is used for Root element
-	
+	List<Book> bks = new ArrayList<Book>();
 	/*Data insertion method to the Binary Search Tree. This method has one parameter 
 	to get data of a book and insert it.*/
 	public void insert(Book book)
@@ -70,7 +77,6 @@ public class BinarySearchTree
 	        }
 	    }	 
 	}
-	
 	
 	/* Data searching method of Binary Search Tree. This method has one parameter to
 	get title of a book for searching */
@@ -128,6 +134,44 @@ public class BinarySearchTree
 	    return pointed_node;	 
 	}
 	
+	/* Data retrieving from Binary Search Tree. This method has one parameter get title
+	of a book for retrieving. It returns a list of book objects with title witch are similar to the key title*/
+	public List getBookList(String title)
+	{		
+		readNodes(root,title);	// Calling readNodes(Node,String) method. This method will update the list bks.
+		List list = bks;		// Temporary adding bks to list
+		bks = null;				// Clear the bks
+		return list;			// Return list of books
+	}
+	
+	/* Data retrieving from Binary Search Tree. This method has two parameter to get node and get title
+	of a book for retrieving. It returns a list of book objects with title witch are similar to the key title
+	from given node making it as root*/
+	public List getBookList(Node node, String title)
+	{		
+		readNodes(node,title);	// Calling readNodes(Node,String) method. This method will update the list bks.
+		List list = bks;		// Temporary adding bks to list
+		bks = null;				// Clear the bks
+		return list;			// Return list of books
+	}
+	
+	/* reading nodes of Binary Search Tree. This method has two parameters to get node and get title
+	of a book for retrieving. It updates the bks list of book objects with title witch are similar to the key title.
+	This method use the in-order traversal method to read nodes.*/
+	public void readNodes(Node node,String booktitle)
+	{
+		// Check whether the given node is null
+		if ( node == null )		
+	    	return;
+		
+		readNodes(node.left,booktitle);		// Call it self to read internal nodes of left side
+		
+		if(node.book.title.indexOf(booktitle) != -1)	// Check book title of each books has key title
+		bks.add(node.book);								// if true,then add it into the list
+		
+		readNodes(node.right,booktitle);	// Call it self to read internal nodes of right side
+		
+	}	
 	
 	/* Data removing from Binary Search Tree. This method has one parameter get title
 	of a book for removing. */
@@ -388,8 +432,6 @@ public class BinarySearchTree
 		return remove(isbn);
     }
 	
-	
-	
 	/* This method will find the node with minimum value and return it to the caller.
 	When it was found node will delete with set it into remove method with recursivly checking.
 	This method accept one parameter with node object. */
@@ -409,4 +451,5 @@ public class BinarySearchTree
 			}				
 		return getMinimum(node.left);	// Recursively find the node minimum value
     }
+	
 }
