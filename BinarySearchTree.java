@@ -5,7 +5,8 @@ Class: 	BinarySearchTree
 Constructor: Default constructor
 Methods:
 	public void insert(Book book)
-	
+	public Node search(String title)
+	public Node search(int ISBN)
 	
 */
 
@@ -64,6 +65,64 @@ public class BinarySearchTree
 	        }
 	    }	 
 	}
+	
+	
+	/* Data searching method of Binary Search Tree. This method has one parameter to
+	get title of a book for searching */
+	public Node search(String title) 
+	{	 
+	    // Begins from the root node. So root node assigned to the pointed_node reference. 
+	    Node pointed_node = root;	 
+	    
+		// Check, more nodes of Binary Search Tree
+	    while (pointed_node.book.title != title) 
+		{	 
+	        // If we should search to the left	 
+	        if (title.compareTo(pointed_node.book.title) < 0) 	
+			{	 
+	            // Shift the pointed Node to the left child	node 
+	            pointed_node = pointed_node.left;	 
+	        } 	
+			else 	
+			{	 
+	            // Shift the pointed Node to the right child node 
+	            pointed_node = pointed_node.right;	 
+	        }	 
+	        
+			// If the node was not found, return null	 
+	        if (pointed_node == null)
+	            return null;	 
+	    }
+	    return pointed_node;	 
+	}
+	
+	/* Data searching method of Binary Search Tree. This method has one parameter to
+	get isbn number of a book for searching. This is overloaded method to accept ISBN number*/
+	public Node search(int isbn) 
+	{	 
+	    // Begins from the root node. So root node assigned to the pointed_node reference. 
+	    Node pointed_node = root;	 
+	    // Check, more nodes of Binary Search Tree	 
+	    while (pointed_node.book.isbn != isbn) 
+		{	 
+	        // If we should search to the left	 
+	        if (isbn < pointed_node.book.isbn) 	
+			{	 
+	            // Shift the pointed Node to the left child	node	 
+	            pointed_node = pointed_node.left;	 
+	        } 	
+			else 	
+			{	 
+	            // Shift the pointed Node to the right child node 
+	            pointed_node = pointed_node.right;	 
+	        }	 
+	        // If the node was not found, return null 
+	        if (pointed_node == null)
+	            return null;	 
+	    }
+	    return pointed_node;	 
+	}
+	
 	
 	
 	/* This method will find the node with minimum value and return it to the caller.
